@@ -1,11 +1,16 @@
 // import { useState } from 'react'
+import MainContent from "./components/MainContent";
 import "./css/main.css";
 
 function App() {
 	return (
-		<div className="d-flex justify-content-center flex-column align-items-center">
-			<h1>Hello</h1>
-			<button className="button">Click</button>
+		<div className="app-container">
+			<header className="">
+				<h1 className="text-xl">Create your CV</h1>
+			</header>
+			<main>
+				<MainContent />
+			</main>
 		</div>
 	);
 }

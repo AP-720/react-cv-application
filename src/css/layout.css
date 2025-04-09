@@ -1,0 +1,16 @@
+.app-container {
+	margin-inline: auto;
+}
+
+header {
+	text-align: center;
+	padding: var(--spacing-l) 0;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+}
+
+main {
+	width: 100%;
+	max-width: 1200px;
+	margin-inline: auto;
+}

@@ -1,4 +1,33 @@
+/* Button */
 .button {
-	background-color: var(--accent-color);
-	border-radius: ;
+	color: var(--color-text-primary);
+	background-color: var(--primary-color);
+	border-radius: var(--spacing-m);
+	border: 2px solid var(--accent-color);
+	padding: var(--spacing-m) var(--spacing-xl);
+	cursor: pointer;
+}
+
+.button:hover {
+	border: 2px solid var(--primary-color);
+	color: var(--background-color);
+	background-color: var(--secondary-color);
+}
+
+/* list items*/
+
+.list-item {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	justify-items: center;
+	row-gap: var(--spacing-l);
+	padding-bottom: var(--spacing-xl);
+}
+
+.education-experience-item {
+	padding-bottom: var(--spacing-l);
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
 }

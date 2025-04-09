@@ -414,6 +414,14 @@
   * Classes for controlling text alignment, style, and decoration.
   */
 
+.text-l {
+	font-size: var(--heading-1-size);
+}
+
+.text-xl {
+	font-size: 3.5rem;
+}
+
 .text-left {
 	text-align: left;
 }
@@ -756,6 +764,14 @@
 }
 .col-gap-7 {
 	column-gap: 4rem;
+}
+
+.justify-start {
+	justify-self: start;
+}
+
+.justify-end {
+	justify-self: end;
 }
 
 /* ==========================================================================
@@ -1423,6 +1439,10 @@
 }
 .col-span-12 {
 	grid-column: span 12 / span 12;
+}
+
+.col-span-all {
+	grid-column: 1 / -1;
 }
 
 .row-span-1 {

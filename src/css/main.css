@@ -3,3 +3,39 @@
 @import "./layout.css";
 @import "./components.css";
 @import "./utilities.css";
+
+.cv-container {
+	box-shadow: var(--shadow-elevation-medium);
+	margin: var(--spacing-xl);
+	margin-inline: auto;
+	max-width: 75%;
+}
+
+/* CV Heading */
+.cv-heading-container {
+	background-color: var(--accent-color);
+	padding: var(--spacing-xl);
+}
+
+.contact-container {
+	display: flex;
+	justify-content: space-around;
+	font-size: var(--body-text-size);
+	color: var(--background-color);
+}
+
+.contact-container > p {
+	font-size: var(--heading-3-size);
+}
+
+/* Work Experience Section */
+
+.work-experience-container {
+	padding: var(--spacing-2xl) var(--spacing-3xl) 0 var(--spacing-3xl);
+}
+
+/* Education Section */
+.education-section-container {
+	padding: var(--spacing-xl) var(--spacing-3xl) var(--spacing-2xl)
+		var(--spacing-3xl);
+}
