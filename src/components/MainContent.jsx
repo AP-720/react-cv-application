@@ -1,15 +1,9 @@
-import "/src/css/main.css";
+import CVHeading from "./CVHeading";
 
-export default function MainContent() {
+export default function CVContainer() {
 	return (
 		<div className="cv-container">
-			<div className="cv-heading-container">
-				<h2 className="text-center text-xl text-secondary pb-3">Your Name</h2>
-				<div className="contact-container">
-					<p>12345678910</p>
-					<p>name@yourname.co.uk</p>
-				</div>
-			</div>
+			<CVHeading />
 			<div className="work-experience-container">
 				<h2 className="text-decoration-underline pb-3 ">Work Experience</h2>
 				<ul className="work-experience-list">

@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import MainContent from "./components/MainContent";
+import CVContainer from "./components/MainContent";
 import "./css/main.css";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
 				<h1 className="text-xl">Create your CV</h1>
 			</header>
 			<main>
-				<MainContent />
+				<CVContainer />
 			</main>
 		</div>
 	);
