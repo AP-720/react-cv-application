@@ -1,6 +1,6 @@
 import CVHeading from "./CVHeading";
 import WorkExperience from "./WorkExperience";
-// import { perviousRoles } from "./WorkExperience";
+import Education from "./Education";
 
 const perviousRoles = [
 	{
@@ -29,6 +29,21 @@ const perviousRoles = [
 	},
 ];
 
+const educationHistory = [
+	{
+		courseName: "Degree",
+		schoolName: "University of Burton",
+		fromDate: "Sept 2023",
+		toDate: "Present",
+	},
+	{
+		courseName: "A levels",
+		schoolName: "Burton High School",
+		fromDate: "Jan 2022",
+		toDate: "Aug 2023",
+	},
+];
+
 export default function CVContainer() {
 	return (
 		<div className="cv-container">
@@ -38,27 +53,7 @@ export default function CVContainer() {
 				email={"your-email@here.com"}
 			/>
 			<WorkExperience perviousRoles={perviousRoles} />
-			<div className="education-section-container">
-				<h2 className="text-decoration-underline pb-3 ">Education</h2>
-				<ul className="education-experience-list">
-					<li className="list-item">
-						<h3 className="justify-start">Course Name</h3>
-						<h4>School Name</h4>
-						<p className="justify-end">
-							<span className="font-weight-bold">From:</span> Feb-2025{" "}
-							<span className="font-weight-bold">To:</span> Present
-						</p>
-					</li>
-					<li className="list-item">
-						<h3 className="justify-start">Course Name</h3>
-						<h4>School Name</h4>
-						<p className="justify-end">
-							<span className="font-weight-bold">From:</span> Feb-2025{" "}
-							<span className="font-weight-bold">To:</span> Present
-						</p>
-					</li>
-				</ul>
-			</div>
+			<Education educationHistory={educationHistory} />
 		</div>
 	);
 }
