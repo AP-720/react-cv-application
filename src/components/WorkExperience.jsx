@@ -1,3 +1,6 @@
+import { useState } from "react";
+import EditButton from "./EditButton";
+
 function WorkExperienceItem({
 	position,
 	companyName,
@@ -19,8 +22,18 @@ function WorkExperienceItem({
 }
 
 export default function WorkExperience({ perviousRoles }) {
+	const [isMouseInside, setIsMouseInside] = useState();
+
+	const handleOnClick = () => {
+		alert("clicked");
+	};
+
 	return (
-		<div className="work-experience-container">
+		<div
+			className="work-experience-container"
+			onMouseEnter={() => setIsMouseInside(true)}
+			onMouseLeave={() => setIsMouseInside(false)}
+		>
 			<h2 className="text-decoration-underline pb-3 ">Work Experience</h2>
 			<ul className="work-experience-list">
 				{perviousRoles.map((role, index) => (
@@ -35,6 +48,7 @@ export default function WorkExperience({ perviousRoles }) {
 				))}
 			</ul>
 			<hr />
+			{isMouseInside && <EditButton onClick={handleOnClick} />}
 		</div>
 	);
 }

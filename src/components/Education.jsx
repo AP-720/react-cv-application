@@ -1,3 +1,6 @@
+import { useState } from "react";
+import EditButton from "./EditButton";
+
 function EducationItem({ courseName, schoolName, fromDate, toDate }) {
 	return (
 		<li className="list-item">
@@ -12,8 +15,18 @@ function EducationItem({ courseName, schoolName, fromDate, toDate }) {
 }
 
 export default function Education({ educationHistory }) {
+	const [isMouseInside, setIsMouseInside] = useState();
+
+	const handleOnClick = () => {
+		alert("Clicked");
+	};
+
 	return (
-		<div className="education-section-container">
+		<div
+			className="education-section-container"
+			onMouseEnter={() => setIsMouseInside(true)}
+			onMouseLeave={() => setIsMouseInside(false)}
+		>
 			<h2 className="text-decoration-underline pb-3 ">Education</h2>
 			<ul className="education-experience-list">
 				{educationHistory.map((school, index) => (
@@ -26,6 +39,7 @@ export default function Education({ educationHistory }) {
 					/>
 				))}
 			</ul>
+			{isMouseInside && <EditButton onClick={handleOnClick} />}
 		</div>
 	);
 }

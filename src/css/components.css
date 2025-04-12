@@ -1,11 +1,17 @@
-/* Button */
+/* Edit Button */
 .button {
 	color: var(--color-text-primary);
 	background-color: var(--primary-color);
 	border-radius: var(--spacing-m);
-	border: 2px solid var(--accent-color);
-	padding: var(--spacing-m) var(--spacing-xl);
+	border: 2px solid var(--secondary-color);
+	padding: var(--spacing-s) var(--spacing-s);
 	cursor: pointer;
+	position: absolute;
+	right: var(--spacing-l);
+	top: var(--spacing-l);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .button:hover {
