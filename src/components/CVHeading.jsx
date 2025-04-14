@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import EditButton from "./EditButton";
 import Modal from "./Modal";
 
@@ -18,11 +19,29 @@ function HeadingForm() {
 	);
 }
 
-export default function CVHeading({ name, phoneNumber, email }) {
+export default function CVHeading() {
 	const [isMouseInside, setIsMouseInside] = useState();
+	const [modalOpen, setModalOpen] = useState(false);
+	const [headingData, setHeadingData] = useState({
+		name: "Enter Name",
+		phoneNumber: "###########",
+		email: "your-email@here.com",
+	});
 
-	const handleOnClick = () => {
-		alert("clicked");
+	const openEditModal = () => {
+		setModalOpen(true);
+	};
+
+	const closeEditModal = () => {
+		setModalOpen(false);
+		setIsMouseInside(false);
+	};
+
+	const saveHeadingUpdate = () => {
+		console.log("Update Heading Content");
+
+		setModalOpen(false);
+		setIsMouseInside(false);
 	};
 
 	return (
@@ -31,15 +50,26 @@ export default function CVHeading({ name, phoneNumber, email }) {
 			onMouseEnter={() => setIsMouseInside(true)}
 			onMouseLeave={() => setIsMouseInside(false)}
 		>
-			<h2 className="text-center text-xl text-secondary pb-3">{name}</h2>
+			<h2 className="text-center text-xl text-secondary pb-3">
+				{headingData.name}
+			</h2>
 			<div className="contact-container">
-				<p>{phoneNumber}</p>
-				<p>{email}</p>
+				<p>{headingData.phoneNumber}</p>
+				<p>{headingData.email}</p>
 			</div>
-			{isMouseInside && <EditButton onClick={handleOnClick} />}
-			<Modal title={"contact"}>
-				<HeadingForm />
-			</Modal>
+			{isMouseInside && <EditButton onClick={openEditModal} />}
+			{modalOpen &&
+				createPortal(
+					<Modal
+						title={"contact"}
+						onClose={closeEditModal}
+						onCancel={closeEditModal}
+						onSave={saveHeadingUpdate}
+					>
+						<HeadingForm />
+					</Modal>,
+					document.body
+				)}
 		</div>
 	);
 }

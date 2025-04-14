@@ -48,11 +48,7 @@ const educationHistory = [
 export default function CVContainer() {
 	return (
 		<div className="cv-container">
-			<CVHeading
-				name={"Enter Name"}
-				phoneNumber={"###########"}
-				email={"your-email@here.com"}
-			/>
+			<CVHeading />
 			<WorkExperience perviousRoles={perviousRoles} />
 			<Education educationHistory={educationHistory} />
 		</div>
