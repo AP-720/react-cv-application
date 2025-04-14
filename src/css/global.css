@@ -63,3 +63,17 @@ ul {
 li {
 	max-width: 100%;
 }
+
+label {
+	font-size: var(--heading-3-size);
+	padding-bottom: var(--spacing-l);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-s);
+}
+
+input {
+	padding: var(--spacing-s);
+	width: 15em;
+}

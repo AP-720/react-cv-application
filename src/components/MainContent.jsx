@@ -1,6 +1,7 @@
 import CVHeading from "./CVHeading";
 import WorkExperience from "./WorkExperience";
 import Education from "./Education";
+import Modal from "./Modal";
 
 const perviousRoles = [
 	{
