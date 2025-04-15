@@ -21,7 +21,7 @@ function WorkExperienceItem({
 	);
 }
 
-export default function WorkExperience({ perviousRoles }) {
+export default function WorkExperience({ workExperiences }) {
 	const [isMouseInside, setIsMouseInside] = useState();
 
 	const handleOnClick = () => {
@@ -36,7 +36,7 @@ export default function WorkExperience({ perviousRoles }) {
 		>
 			<h2 className="text-decoration-underline pb-3 ">Work Experience</h2>
 			<ul className="work-experience-list">
-				{perviousRoles.map((role, index) => (
+				{workExperiences.map((role, index) => (
 					<WorkExperienceItem
 						key={index}
 						position={role.position}

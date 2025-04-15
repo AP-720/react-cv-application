@@ -19,25 +19,21 @@ function HeadingForm() {
 	);
 }
 
-export default function CVHeading() {
+export default function CVHeading({ headingData, onUpdateHeading }) {
 	const [isMouseInside, setIsMouseInside] = useState();
 	const [modalOpen, setModalOpen] = useState(false);
-	const [headingData, setHeadingData] = useState({
-		name: "Enter Name",
-		phoneNumber: "###########",
-		email: "your-email@here.com",
-	});
+	const { name, phoneNumber, email } = headingData;
 
-	const openEditModal = () => {
+	const handleEdit = () => {
 		setModalOpen(true);
 	};
 
-	const closeEditModal = () => {
+	const handleClose = () => {
 		setModalOpen(false);
 		setIsMouseInside(false);
 	};
 
-	const saveHeadingUpdate = () => {
+	const handleSave = (formData) => {
 		console.log("Update Heading Content");
 
 		setModalOpen(false);
@@ -50,21 +46,19 @@ export default function CVHeading() {
 			onMouseEnter={() => setIsMouseInside(true)}
 			onMouseLeave={() => setIsMouseInside(false)}
 		>
-			<h2 className="text-center text-xl text-secondary pb-3">
-				{headingData.name}
-			</h2>
+			<h2 className="text-center text-xl text-secondary pb-3">{name}</h2>
 			<div className="contact-container">
-				<p>{headingData.phoneNumber}</p>
-				<p>{headingData.email}</p>
+				<p>{phoneNumber}</p>
+				<p>{email}</p>
 			</div>
-			{isMouseInside && <EditButton onClick={openEditModal} />}
+			{isMouseInside && <EditButton onClick={handleEdit} />}
 			{modalOpen &&
 				createPortal(
 					<Modal
 						title={"contact"}
-						onClose={closeEditModal}
-						onCancel={closeEditModal}
-						onSave={saveHeadingUpdate}
+						onClose={handleClose}
+						onCancel={handleClose}
+						onSave={handleSave}
 					>
 						<HeadingForm />
 					</Modal>,

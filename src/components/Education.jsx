@@ -14,7 +14,7 @@ function EducationItem({ courseName, schoolName, fromDate, toDate }) {
 	);
 }
 
-export default function Education({ educationHistory }) {
+export default function Education({ education }) {
 	const [isMouseInside, setIsMouseInside] = useState();
 
 	const handleOnClick = () => {
@@ -29,7 +29,7 @@ export default function Education({ educationHistory }) {
 		>
 			<h2 className="text-decoration-underline pb-3 ">Education</h2>
 			<ul className="education-experience-list">
-				{educationHistory.map((school, index) => (
+				{education.map((school, index) => (
 					<EducationItem
 						key={index}
 						courseName={school.courseName}
