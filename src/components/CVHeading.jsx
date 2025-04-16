@@ -1,19 +1,53 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import EditButton from "./EditButton";
 import Modal from "./Modal";
 
-function HeadingForm() {
+function HeadingForm({ formRef, onSubmit, initialData }) {
+	const [formState, setFormSate] = useState({
+		name: initialData.name || "",
+		phoneNumber: initialData.phoneNumber || "",
+		email: initialData.email || "",
+	});
+
+	const handleChange = (e) => {
+		setFormSate((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
 	return (
-		<form action="" className="form">
+		<form action="" className="form" ref={formRef} onSubmit={onSubmit}>
 			<label>
-				Name: <input type="text" name="name" placeholder="Enter name" />
+				Name:{" "}
+				<input
+					type="text"
+					name="name"
+					value={formState.name}
+					onChange={handleChange}
+					placeholder="Enter name"
+				/>
 			</label>
 			<label>
-				Phone: <input type="tel" placeholder="Enter phone number" />
+				Phone:{" "}
+				<input
+					type="tel"
+					name="phoneNumber"
+					value={formState.phoneNumber}
+					onChange={handleChange}
+					placeholder="Enter phone number"
+				/>
 			</label>
 			<label>
-				E-mail: <input type="email" placeholder="Enter e-mail address" />
+				E-mail:{" "}
+				<input
+					type="email"
+					name="email"
+					value={formState.email}
+					onChange={handleChange}
+					placeholder="Enter e-mail address"
+				/>
 			</label>
 		</form>
 	);
@@ -23,6 +57,7 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 	const [isMouseInside, setIsMouseInside] = useState();
 	const [modalOpen, setModalOpen] = useState(false);
 	const { name, phoneNumber, email } = headingData;
+	const formRef = useRef(null);
 
 	const handleEdit = () => {
 		setModalOpen(true);
@@ -33,8 +68,18 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 		setIsMouseInside(false);
 	};
 
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		// Get the form data
+		const formData = new FormData(formRef.current);
+		// Put the data in key:value pairs so easier to work with.
+		const data = Object.fromEntries(formData.entries());
+
+		handleSave(data);
+	};
+
 	const handleSave = (formData) => {
-		console.log("Update Heading Content");
+		onUpdateHeading(formData);
 
 		setModalOpen(false);
 		setIsMouseInside(false);
@@ -58,9 +103,13 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 						title={"contact"}
 						onClose={handleClose}
 						onCancel={handleClose}
-						onSave={handleSave}
+						formRef={formRef}
 					>
-						<HeadingForm />
+						<HeadingForm
+							formRef={formRef}
+							onSubmit={handleFormSubmit}
+							initialData={headingData}
+						/>
 					</Modal>,
 					document.body
 				)}

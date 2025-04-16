@@ -1,6 +1,6 @@
 import { closeButton } from "./icons";
 
-export default function Modal({ title, children, onClose, onCancel, onSave }) {
+export default function Modal({ title, children, onClose, onCancel, formRef }) {
 	return (
 		<div
 			className="modal-container"
@@ -23,9 +23,8 @@ export default function Modal({ title, children, onClose, onCancel, onSave }) {
 				</div>
 				<div className="modal-footer">
 					<button
-						type="submit"
 						className="button button-save"
-						onClick={() => onSave()}
+						onClick={() => formRef.current?.requestSubmit()}
 					>
 						Save
 					</button>
