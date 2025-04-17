@@ -11,6 +11,7 @@ const initialCVData = {
 	},
 	workExperiences: [
 		{
+			id: crypto.randomUUID(),
 			position: "Job Title 1",
 			companyName: "Company Name 1",
 			fromDate: "Jan 2025",
@@ -19,6 +20,7 @@ const initialCVData = {
 				"Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusamus quasi ea in ratione beatae ipsam sapiente praesentium inventore! Exercitationem placeat numquam saepe nobis ab cum eaque atque molestiae perferendis.",
 		},
 		{
+			id: crypto.randomUUID(),
 			position: "Job Title 2",
 			companyName: "Company Name 2",
 			fromDate: "Jan 2024",
@@ -27,6 +29,7 @@ const initialCVData = {
 				"Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusamus quasi ea in ratione beatae ipsam sapiente praesentium inventore! Exercitationem placeat numquam saepe nobis ab cum eaque atque molestiae perferendis.",
 		},
 		{
+			id: crypto.randomUUID(),
 			position: "Job Title 3",
 			companyName: "Company Name 3",
 			fromDate: "Jan 2023",
@@ -37,12 +40,14 @@ const initialCVData = {
 	],
 	education: [
 		{
+			id: crypto.randomUUID(),
 			courseName: "Degree",
 			schoolName: "University of Burton",
 			fromDate: "Sept 2023",
 			toDate: "Present",
 		},
 		{
+			id: crypto.randomUUID(),
 			courseName: "A levels",
 			schoolName: "Burton High School",
 			fromDate: "Jan 2022",

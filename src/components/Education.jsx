@@ -30,9 +30,9 @@ export default function Education({ education }) {
 		>
 			<h2 className="text-decoration-underline pb-3 ">Education</h2>
 			<ul className="education-experience-list">
-				{education.map((school, index) => (
+				{education.map((school) => (
 					<EducationItem
-						key={index}
+						key={school.id}
 						courseName={school.courseName}
 						schoolName={school.schoolName}
 						fromDate={school.fromDate}

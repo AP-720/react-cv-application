@@ -37,9 +37,9 @@ export default function WorkExperience({ workExperiences }) {
 		>
 			<h2 className="text-decoration-underline pb-3 ">Work Experience</h2>
 			<ul className="work-experience-list">
-				{workExperiences.map((role, index) => (
+				{workExperiences.map((role) => (
 					<WorkExperienceItem
-						key={index}
+						key={role.id}
 						position={role.position}
 						companyName={role.companyName}
 						fromDate={role.fromDate}
