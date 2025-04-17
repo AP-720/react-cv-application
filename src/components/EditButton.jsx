@@ -1,9 +1,7 @@
-import { editButton } from "./icons";
-
-export default function EditButton({ onClick }) {
+export default function SquareButton({ onClick, icon }) {
 	return (
 		<button className="button edit-button" onClick={onClick}>
-			{editButton}
+			{icon}
 		</button>
 	);
 }

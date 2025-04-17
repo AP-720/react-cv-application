@@ -1,5 +1,6 @@
 import { useState } from "react";
-import EditButton from "./EditButton";
+import SquareButton from "./EditButton";
+import { plusButton } from "./icons";
 
 function EducationItem({ courseName, schoolName, fromDate, toDate }) {
 	return (
@@ -39,7 +40,9 @@ export default function Education({ education }) {
 					/>
 				))}
 			</ul>
-			{isMouseInside && <EditButton onClick={handleOnClick} />}
+			{isMouseInside && (
+				<SquareButton onClick={handleOnClick} icon={plusButton} />
+			)}
 		</div>
 	);
 }

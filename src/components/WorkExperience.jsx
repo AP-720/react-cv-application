@@ -1,5 +1,6 @@
 import { useState } from "react";
-import EditButton from "./EditButton";
+import SquareButton from "./EditButton";
+import { plusButton } from "./icons";
 
 function WorkExperienceItem({
 	position,
@@ -48,7 +49,9 @@ export default function WorkExperience({ workExperiences }) {
 				))}
 			</ul>
 			<hr />
-			{isMouseInside && <EditButton onClick={handleOnClick} />}
+			{isMouseInside && (
+				<SquareButton onClick={handleOnClick} icon={plusButton} />
+			)}
 		</div>
 	);
 }

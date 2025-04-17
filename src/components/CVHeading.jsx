@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { createPortal } from "react-dom";
-import EditButton from "./EditButton";
+import SquareButton from "./EditButton";
+import { editButton } from "./icons";
 import Modal from "./Modal";
 
 function HeadingForm({ formRef, onSubmit, initialData }) {
@@ -96,7 +97,7 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 				<p>{phoneNumber}</p>
 				<p>{email}</p>
 			</div>
-			{isMouseInside && <EditButton onClick={handleEdit} />}
+			{isMouseInside && <SquareButton onClick={handleEdit} icon={editButton} />}
 			{modalOpen &&
 				createPortal(
 					<Modal
