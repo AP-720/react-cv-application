@@ -1,6 +1,8 @@
-export default function SquareButton({ onClick, icon }) {
+export default function SquareButton({ onClick, icon, typeStyling }) {
+	const className = `button${typeStyling ? " " + typeStyling : ""}`
+	
 	return (
-		<button className="button edit-button" onClick={onClick}>
+		<button className={className} onClick={onClick}>
 			{icon}
 		</button>
 	);

@@ -97,7 +97,7 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 				<p>{phoneNumber}</p>
 				<p>{email}</p>
 			</div>
-			{isMouseInside && <SquareButton onClick={handleEdit} icon={editButton} />}
+			{isMouseInside && <SquareButton onClick={handleEdit} icon={editButton} typeStyling={"edit-button"} />}
 			{modalOpen &&
 				createPortal(
 					<Modal

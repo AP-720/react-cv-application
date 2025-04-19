@@ -1,16 +1,25 @@
 import { useState } from "react";
 import SquareButton from "./EditButton";
-import { plusButton } from "./icons";
+import { plusButton, editButton } from "./icons";
 
 function EducationItem({ courseName, schoolName, fromDate, toDate }) {
+	const [isMouseInside, setIsMouseInside] = useState();
+
 	return (
-		<li className="list-item">
+		<li
+			className="list-item"
+			onMouseEnter={() => setIsMouseInside(true)}
+			onMouseLeave={() => setIsMouseInside(false)}
+		>
 			<h3 className="justify-start">{courseName}</h3>
 			<h4>{schoolName}</h4>
 			<p className="justify-end">
 				<span className="font-weight-bold">From:</span> {fromDate}{" "}
 				<span className="font-weight-bold">To:</span> {toDate}
 			</p>
+			{isMouseInside && (
+				<SquareButton icon={editButton} typeStyling={"list-edit-button"} />
+			)}
 		</li>
 	);
 }
@@ -41,7 +50,11 @@ export default function Education({ education }) {
 				))}
 			</ul>
 			{isMouseInside && (
-				<SquareButton onClick={handleOnClick} icon={plusButton} />
+				<SquareButton
+					onClick={handleOnClick}
+					icon={plusButton}
+					typeStyling={"edit-button"}
+				/>
 			)}
 		</div>
 	);

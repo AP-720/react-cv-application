@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SquareButton from "./EditButton";
-import { plusButton } from "./icons";
+import { plusButton, editButton } from "./icons";
 
 function WorkExperienceItem({
 	position,
@@ -9,8 +9,14 @@ function WorkExperienceItem({
 	toDate,
 	responsibilities,
 }) {
+	const [isMouseInside, setIsMouseInside] = useState();
+
 	return (
-		<li className="list-item">
+		<li
+			className="list-item"
+			onMouseEnter={() => setIsMouseInside(true)}
+			onMouseLeave={() => setIsMouseInside(false)}
+		>
 			<h3 className="justify-start">{position}</h3>
 			<h4>{companyName}</h4>
 			<p className="justify-end">
@@ -18,6 +24,9 @@ function WorkExperienceItem({
 				<span className="font-weight-bold">To:</span> {toDate}
 			</p>
 			<p className="col-span-all">{responsibilities}</p>
+			{isMouseInside && (
+				<SquareButton icon={editButton} typeStyling={"list-edit-button"} />
+			)}
 		</li>
 	);
 }
@@ -50,7 +59,11 @@ export default function WorkExperience({ workExperiences }) {
 			</ul>
 			<hr />
 			{isMouseInside && (
-				<SquareButton onClick={handleOnClick} icon={plusButton} />
+				<SquareButton
+					onClick={handleOnClick}
+					icon={plusButton}
+					typeStyling={"edit-button"}
+				/>
 			)}
 		</div>
 	);
