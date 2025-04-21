@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SquareButton from "./EditButton";
 import { plusButton, editButton } from "./icons";
 
@@ -10,12 +10,20 @@ function WorkExperienceItem({
 	responsibilities,
 }) {
 	const [isMouseInside, setIsMouseInside] = useState();
+	const hoverTimeout = useRef(null);
 
 	return (
 		<li
 			className="list-item"
-			onMouseEnter={() => setIsMouseInside(true)}
-			onMouseLeave={() => setIsMouseInside(false)}
+			onMouseEnter={() => {
+				clearTimeout(hoverTimeout.current);
+				setIsMouseInside(true);
+			}}
+			onMouseLeave={() => {
+				hoverTimeout.current = setTimeout(() => {
+					setIsMouseInside(false);
+				}, 200);
+			}}
 		>
 			<h3 className="justify-start">{position}</h3>
 			<h4>{companyName}</h4>
@@ -25,7 +33,19 @@ function WorkExperienceItem({
 			</p>
 			<p className="col-span-all">{responsibilities}</p>
 			{isMouseInside && (
-				<SquareButton icon={editButton} typeStyling={"list-edit-button"} />
+				<SquareButton
+					icon={editButton}
+					typeStyling={"list-edit-button"}
+					onMouseEnter={() => {
+						clearTimeout(hoverTimeout.current);
+						setIsMouseInside(true);
+					}}
+					onMouseLeave={() => {
+						hoverTimeout.current = setTimeout(() => {
+							setIsMouseInside(false);
+						}, 200);
+					}}
+				/>
 			)}
 		</li>
 	);
