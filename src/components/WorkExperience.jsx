@@ -8,8 +8,10 @@ function WorkExperienceItem({
 	fromDate,
 	toDate,
 	responsibilities,
+	onEdit,
 }) {
-	const [isMouseInside, setIsMouseInside] = useState();
+	const [isMouseInside, setIsMouseInside] = useState(false);
+	const [isHoveringButton, setIsHoveringButton] = useState(false);
 	const hoverTimeout = useRef(null);
 
 	return (
@@ -32,17 +34,30 @@ function WorkExperienceItem({
 				<span className="font-weight-bold">To:</span> {toDate}
 			</p>
 			<p className="col-span-all">{responsibilities}</p>
-			{isMouseInside && (
+			<div
+				className="button-hover-area"
+				onMouseEnter={() => {
+					clearTimeout(hoverTimeout.current);
+					setIsHoveringButton(true);
+				}}
+				onMouseLeave={() => {
+					hoverTimeout.current = setTimeout(() => {
+						setIsHoveringButton(false);
+					}, 200);
+				}}
+			></div>
+			{(isMouseInside || isHoveringButton) && (
 				<SquareButton
+					onClick={onEdit}
 					icon={editButton}
 					typeStyling={"list-edit-button"}
 					onMouseEnter={() => {
 						clearTimeout(hoverTimeout.current);
-						setIsMouseInside(true);
+						setIsHoveringButton(true);
 					}}
 					onMouseLeave={() => {
 						hoverTimeout.current = setTimeout(() => {
-							setIsMouseInside(false);
+							setIsHoveringButton(false);
 						}, 200);
 					}}
 				/>
@@ -54,8 +69,12 @@ function WorkExperienceItem({
 export default function WorkExperience({ workExperiences }) {
 	const [isMouseInside, setIsMouseInside] = useState();
 
-	const handleOnClick = () => {
-		alert("clicked");
+	const onAddExperience = () => {
+		alert("Add");
+	};
+
+	const onEditExperience = () => {
+		alert("Edit");
 	};
 
 	return (
@@ -74,13 +93,14 @@ export default function WorkExperience({ workExperiences }) {
 						fromDate={role.fromDate}
 						toDate={role.toDate}
 						responsibilities={role.responsibilities}
+						onEdit={() => onEditExperience()}
 					/>
 				))}
 			</ul>
 			<hr />
 			{isMouseInside && (
 				<SquareButton
-					onClick={handleOnClick}
+					onClick={() => onAddExperience()}
 					icon={plusButton}
 					typeStyling={"edit-button"}
 				/>
