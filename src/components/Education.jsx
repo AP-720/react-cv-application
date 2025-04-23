@@ -26,6 +26,7 @@ function EducationItem({ courseName, schoolName, fromDate, toDate }) {
 
 export default function Education({ education }) {
 	const [isMouseInside, setIsMouseInside] = useState();
+	const [isInsideList, setIsInList] = useState(false);
 
 	const handleOnClick = () => {
 		alert("Clicked");
@@ -38,7 +39,11 @@ export default function Education({ education }) {
 			onMouseLeave={() => setIsMouseInside(false)}
 		>
 			<h2 className="text-decoration-underline pb-3 ">Education</h2>
-			<ul className="education-experience-list">
+			<ul
+				className="education-experience-list"
+				onMouseEnter={() => setIsInList(true)}
+				onMouseLeave={() => setIsInList(false)}
+			>
 				{education.map((school) => (
 					<EducationItem
 						key={school.id}
@@ -49,7 +54,7 @@ export default function Education({ education }) {
 					/>
 				))}
 			</ul>
-			{isMouseInside && (
+			{isMouseInside && !isInsideList && (
 				<SquareButton
 					onClick={handleOnClick}
 					icon={plusButton}

@@ -67,7 +67,8 @@ function WorkExperienceItem({
 }
 
 export default function WorkExperience({ workExperiences }) {
-	const [isMouseInside, setIsMouseInside] = useState();
+	const [isMouseInside, setIsMouseInside] = useState(false);
+	const [isInsideList, setIsInList] = useState(false);
 
 	const onAddExperience = () => {
 		alert("Add");
@@ -84,7 +85,11 @@ export default function WorkExperience({ workExperiences }) {
 			onMouseLeave={() => setIsMouseInside(false)}
 		>
 			<h2 className="text-decoration-underline pb-3 ">Work Experience</h2>
-			<ul className="work-experience-list">
+			<ul
+				className="work-experience-list"
+				onMouseEnter={() => setIsInList(true)}
+				onMouseLeave={() => setIsInList(false)}
+			>
 				{workExperiences.map((role) => (
 					<WorkExperienceItem
 						key={role.id}
@@ -98,7 +103,7 @@ export default function WorkExperience({ workExperiences }) {
 				))}
 			</ul>
 			<hr />
-			{isMouseInside && (
+			{isMouseInside && !isInsideList && (
 				<SquareButton
 					onClick={() => onAddExperience()}
 					icon={plusButton}
