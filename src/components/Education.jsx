@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SquareButton from "./EditButton";
 import { plusButton, editButton } from "./icons";
 
-function EducationItem({ courseName, schoolName, fromDate, toDate }) {
-	const [isMouseInside, setIsMouseInside] = useState();
+function EducationItem({ courseName, schoolName, fromDate, toDate, onEdit }) {
+	const [isMouseInside, setIsMouseInside] = useState(false);
+	const [isHoveringButton, setIsHoveringButton] = useState(false);
+	const hoverTimeout = useRef(null);
 
 	return (
 		<li
 			className="list-item"
-			onMouseEnter={() => setIsMouseInside(true)}
-			onMouseLeave={() => setIsMouseInside(false)}
+			onMouseEnter={() => {
+				clearTimeout(hoverTimeout.current);
+				setIsMouseInside(true);
+			}}
+			onMouseLeave={() => {
+				hoverTimeout.current = setTimeout(() => {
+					setIsMouseInside(false);
+				}, 200);
+			}}
 		>
 			<h3 className="justify-start">{courseName}</h3>
 			<h4>{schoolName}</h4>
@@ -17,8 +26,33 @@ function EducationItem({ courseName, schoolName, fromDate, toDate }) {
 				<span className="font-weight-bold">From:</span> {fromDate}{" "}
 				<span className="font-weight-bold">To:</span> {toDate}
 			</p>
-			{isMouseInside && (
-				<SquareButton icon={editButton} typeStyling={"list-edit-button"} />
+			<div
+				className="button-hover-area"
+				onMouseEnter={() => {
+					clearTimeout(hoverTimeout.current);
+					setIsHoveringButton(true);
+				}}
+				onMouseLeave={() => {
+					hoverTimeout.current = setTimeout(() => {
+						setIsHoveringButton(false);
+					}, 200);
+				}}
+			></div>
+			{(isMouseInside || isHoveringButton) && (
+				<SquareButton
+					onClick={onEdit}
+					icon={editButton}
+					typeStyling={"list-edit-button"}
+					onMouseEnter={() => {
+						clearTimeout(hoverTimeout.current);
+						setIsHoveringButton(true);
+					}}
+					onMouseLeave={() => {
+						hoverTimeout.current = setTimeout(() => {
+							setIsHoveringButton(false);
+						}, 200);
+					}}
+				/>
 			)}
 		</li>
 	);
@@ -28,8 +62,12 @@ export default function Education({ education }) {
 	const [isMouseInside, setIsMouseInside] = useState();
 	const [isInsideList, setIsInList] = useState(false);
 
-	const handleOnClick = () => {
-		alert("Clicked");
+	const onAddEducation = () => {
+		alert("Clicked add education");
+	};
+
+	const onEditEducation = () => {
+		alert("Edit education");
 	};
 
 	return (
@@ -51,12 +89,13 @@ export default function Education({ education }) {
 						schoolName={school.schoolName}
 						fromDate={school.fromDate}
 						toDate={school.toDate}
+						onEdit={() => onEditEducation()}
 					/>
 				))}
 			</ul>
 			{isMouseInside && !isInsideList && (
 				<SquareButton
-					onClick={handleOnClick}
+					onClick={() => onAddEducation()}
 					icon={plusButton}
 					typeStyling={"edit-button"}
 				/>
