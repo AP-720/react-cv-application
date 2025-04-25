@@ -66,9 +66,21 @@ export default function CVContainer() {
 		}));
 	};
 
+	// Different to above as not updating the whole value, need to find the matching id and replace that one. 
+
+	// const updateWorkExperience = (newWorkData) => {
+	// 	setCvData((prevData) => ({
+	// 		...prevData,
+	// 		workExperiences: 
+	// 	}))
+	// }
+
 	return (
 		<div className="cv-container">
-			<CVHeading headingData={cvData.heading} onUpdateHeading={updateHeading} />
+			<CVHeading
+				headingData={cvData.heading}
+				onUpdateHeading={() => updateHeading()}
+			/>
 			<WorkExperience workExperiences={cvData.workExperiences} />
 			<Education education={cvData.education} />
 		</div>

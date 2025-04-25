@@ -118,6 +118,17 @@
 	gap: var(--spacing-3xl);
 }
 
-/* .form {
+.form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+}
 
-} */
+.modal-date-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: var(--spacing-l);
+}

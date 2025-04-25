@@ -1,6 +1,84 @@
 import { useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import SquareButton from "./EditButton";
 import { plusButton, editButton } from "./icons";
+import Modal from "./Modal";
+
+function WorkExperienceForm({ formRef, onSubmit, initialData }) {
+	const [formState, setFormSate] = useState({
+		position: initialData.position || "",
+		companyName: initialData.companyName || "",
+		fromDate: initialData.fromDate || "",
+		toDate: initialData.toDate || "",
+		responsibilities: initialData.responsibilities || "",
+	});
+
+	const handleChange = (e) => {
+		setFormSate((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	return (
+		<>
+			<form action="" className="form" ref={formRef} onSubmit={onSubmit}>
+				<label>
+					Position:{" "}
+					<input
+						type="text"
+						name="position"
+						value={formState.position}
+						onChange={handleChange}
+						placeholder="Enter Job Title"
+					/>
+				</label>
+				<label>
+					Company Name:{" "}
+					<input
+						type="text"
+						name="companyName"
+						value={formState.companyName}
+						onChange={handleChange}
+						placeholder="Enter Company Name"
+					/>
+				</label>
+				<label>
+					From:{" "}
+					<input
+						type="text"
+						name="fromDate"
+						value={formState.fromDate}
+						onChange={handleChange}
+						placeholder="Enter date role started"
+					/>
+				</label>
+				<label>
+					To:{" "}
+					<input
+						type="text"
+						name="toDate"
+						value={formState.toDate}
+						onChange={handleChange}
+						placeholder="Enter date role ended"
+					/>
+				</label>
+				<label className="align-items-start">
+					Responsibilities:{" "}
+					<textarea
+						name="responsibilities"
+						value={formState.responsibilities}
+						onChange={handleChange}
+						rows={3}
+						cols={40}
+						placeholder="Enter responsibilities for this role."
+					></textarea>
+				</label>
+			</form>
+			<button>Delete Job</button>
+		</>
+	);
+}
 
 function WorkExperienceItem({
 	position,
@@ -71,10 +149,12 @@ export default function WorkExperience({ workExperiences }) {
 	const [isInsideList, setIsInList] = useState(false);
 
 	const onAddExperience = () => {
+		// Need to copy the current workExperience data, then push the new job on to it. Would this be the place to create the UUID for the id
 		alert("Add");
 	};
 
 	const onEditExperience = () => {
+		// Needs to find the right job via its id and then copy it and replace it with the new data. 
 		alert("Edit");
 	};
 
@@ -110,6 +190,18 @@ export default function WorkExperience({ workExperiences }) {
 					typeStyling={"edit-button"}
 				/>
 			)}
+			<Modal
+				title={"Work Experience"}
+				// onClose={}
+				// onCancel={}
+				// formRef={}
+			>
+				<WorkExperienceForm
+					// formRef={}
+					// onSubmit={}
+					initialData={workExperiences}
+				/>
+			</Modal>
 		</div>
 	);
 }
