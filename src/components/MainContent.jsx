@@ -66,6 +66,18 @@ export default function CVContainer() {
 		}));
 	};
 
+	// Work experience functions
+
+	const addWorkExperience = (newWork) => {
+		setCvData((prevData) => ({
+			...prevData,
+			workExperiences: [
+				...prevData.workExperiences,
+				{...newWork, id: crypto.randomUUID()}
+			]
+		}));
+	}
+
 	// Different to above as not updating the whole value, need to find the matching id and replace that one. 
 
 	// const updateWorkExperience = (newWorkData) => {
@@ -81,7 +93,7 @@ export default function CVContainer() {
 				headingData={cvData.heading}
 				onUpdateHeading={() => updateHeading()}
 			/>
-			<WorkExperience workExperiences={cvData.workExperiences} />
+			<WorkExperience workExperiences={cvData.workExperiences} onAddWorkExperience={addWorkExperience} />
 			<Education education={cvData.education} />
 		</div>
 	);

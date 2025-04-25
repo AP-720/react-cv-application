@@ -75,12 +75,13 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 					></textarea>
 				</label>
 			</form>
-			<button>Delete Job</button>
+			<button className="button">Delete Job</button>
 		</>
 	);
 }
 
 function WorkExperienceItem({
+	id,
 	position,
 	companyName,
 	fromDate,
@@ -94,6 +95,7 @@ function WorkExperienceItem({
 
 	return (
 		<li
+			id={id}
 			className="list-item"
 			onMouseEnter={() => {
 				clearTimeout(hoverTimeout.current);
@@ -144,17 +146,37 @@ function WorkExperienceItem({
 	);
 }
 
-export default function WorkExperience({ workExperiences }) {
+export default function WorkExperience({
+	workExperiences,
+	onAddWorkExperience,
+}) {
 	const [isMouseInside, setIsMouseInside] = useState(false);
 	const [isInsideList, setIsInList] = useState(false);
+	const [modalOpen, setModalOpen] = useState(false);
+	const [currentItem, setCurrentItem] = useState(null);
+	const formRef = useRef(null);
 
-	const onAddExperience = () => {
-		// Need to copy the current workExperience data, then push the new job on to it. Would this be the place to create the UUID for the id
-		alert("Add");
+	const handleAddButton = () => {
+		setModalOpen(true);
 	};
 
-	const onEditExperience = () => {
-		// Needs to find the right job via its id and then copy it and replace it with the new data. 
+	const handleClose = () => {
+		setModalOpen(false);
+		setIsMouseInside(false);
+	};
+
+	const handleFormSubmit = (e) => {
+		e.preventDefault();
+		const formData = new FormData(formRef.current);
+
+		const data = Object.fromEntries(formData.entries());
+
+		onAddWorkExperience(data);
+		setModalOpen(false);
+	};
+
+	const onEditWork = () => {
+		// Needs to find the right job via its id and then copy it and replace it with the new data.
 		alert("Edit");
 	};
 
@@ -173,35 +195,40 @@ export default function WorkExperience({ workExperiences }) {
 				{workExperiences.map((role) => (
 					<WorkExperienceItem
 						key={role.id}
+						id={role.id}
 						position={role.position}
 						companyName={role.companyName}
 						fromDate={role.fromDate}
 						toDate={role.toDate}
 						responsibilities={role.responsibilities}
-						onEdit={() => onEditExperience()}
+						onEdit={() => onEditWork()}
 					/>
 				))}
 			</ul>
 			<hr />
 			{isMouseInside && !isInsideList && (
 				<SquareButton
-					onClick={() => onAddExperience()}
+					onClick={() => handleAddButton()}
 					icon={plusButton}
 					typeStyling={"edit-button"}
 				/>
 			)}
-			<Modal
-				title={"Work Experience"}
-				// onClose={}
-				// onCancel={}
-				// formRef={}
-			>
-				<WorkExperienceForm
-					// formRef={}
-					// onSubmit={}
-					initialData={workExperiences}
-				/>
-			</Modal>
+			{modalOpen &&
+				createPortal(
+					<Modal
+						title={"Work Experience"}
+						onClose={handleClose}
+						onCancel={handleClose}
+						formRef={formRef}
+					>
+						<WorkExperienceForm
+							formRef={formRef}
+							onSubmit={handleFormSubmit}
+							initialData={workExperiences}
+						/>
+					</Modal>,
+					document.body
+				)}
 		</div>
 	);
 }
