@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import useModal from "../hooks/useModal";
 import SquareButton from "./EditButton";
 import { plusButton, editButton } from "./icons";
 import Modal from "./Modal";
@@ -31,6 +32,7 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 						value={formState.position}
 						onChange={handleChange}
 						placeholder="Enter Job Title"
+						required
 					/>
 				</label>
 				<label>
@@ -41,6 +43,7 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 						value={formState.companyName}
 						onChange={handleChange}
 						placeholder="Enter Company Name"
+						required
 					/>
 				</label>
 				<label>
@@ -51,6 +54,7 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 						value={formState.fromDate}
 						onChange={handleChange}
 						placeholder="Enter date role started"
+						required
 					/>
 				</label>
 				<label>
@@ -61,6 +65,7 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 						value={formState.toDate}
 						onChange={handleChange}
 						placeholder="Enter date role ended"
+						required
 					/>
 				</label>
 				<label className="align-items-start">
@@ -72,6 +77,7 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 						rows={3}
 						cols={40}
 						placeholder="Enter responsibilities for this role."
+						required
 					></textarea>
 				</label>
 			</form>
@@ -128,7 +134,7 @@ function WorkExperienceItem({
 			></div>
 			{(isMouseInside || isHoveringButton) && (
 				<SquareButton
-					onClick={onEdit}
+					onClick={() => onEdit()}
 					icon={editButton}
 					typeStyling={"list-edit-button"}
 					onMouseEnter={() => {
@@ -150,20 +156,18 @@ export default function WorkExperience({
 	workExperiences,
 	onAddWorkExperience,
 }) {
+	const { isOpen, currentItem, formRef, openModal, closeModal } = useModal();
 	const [isMouseInside, setIsMouseInside] = useState(false);
 	const [isInsideList, setIsInList] = useState(false);
-	const [modalOpen, setModalOpen] = useState(false);
-	const [currentItem, setCurrentItem] = useState(null);
-	const formRef = useRef(null);
 
-	const handleAddButton = () => {
-		setModalOpen(true);
-	};
+	// const handleModalOpen = () => {
+	// 	setModalOpen(true);
+	// };
 
-	const handleClose = () => {
-		setModalOpen(false);
-		setIsMouseInside(false);
-	};
+	// const handleModalClose = () => {
+	// 	setModalOpen(false);
+	// 	setIsMouseInside(false);
+	// };
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
@@ -172,13 +176,13 @@ export default function WorkExperience({
 		const data = Object.fromEntries(formData.entries());
 
 		onAddWorkExperience(data);
-		setModalOpen(false);
+		closeModal();
 	};
 
-	const onEditWork = () => {
-		// Needs to find the right job via its id and then copy it and replace it with the new data.
-		alert("Edit");
-	};
+	// const onEditWork = () => {
+	// 	// Needs to find the right job via its id and then copy it and replace it with the new data.
+	// 	alert("Edit");
+	// };
 
 	return (
 		<div
@@ -201,30 +205,31 @@ export default function WorkExperience({
 						fromDate={role.fromDate}
 						toDate={role.toDate}
 						responsibilities={role.responsibilities}
-						onEdit={() => onEditWork()}
+						onEdit={() => openModal()}
 					/>
 				))}
 			</ul>
 			<hr />
 			{isMouseInside && !isInsideList && (
 				<SquareButton
-					onClick={() => handleAddButton()}
+					onClick={() => openModal()}
 					icon={plusButton}
 					typeStyling={"edit-button"}
 				/>
 			)}
-			{modalOpen &&
+			{isOpen &&
 				createPortal(
 					<Modal
 						title={"Work Experience"}
-						onClose={handleClose}
-						onCancel={handleClose}
+						onClose={() => closeModal()}
+						onCancel={() => closeModal()}
 						formRef={formRef}
 					>
 						<WorkExperienceForm
 							formRef={formRef}
 							onSubmit={handleFormSubmit}
-							initialData={workExperiences}
+							// Use empty object for new items
+							initialData={currentItem || {}}
 						/>
 					</Modal>,
 					document.body

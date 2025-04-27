@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
+import useModal from "../hooks/useModal";
 import SquareButton from "./EditButton";
 import { editButton } from "./icons";
 import Modal from "./Modal";
@@ -28,6 +29,7 @@ function HeadingForm({ formRef, onSubmit, initialData }) {
 					value={formState.name}
 					onChange={handleChange}
 					placeholder="Enter name"
+					required
 				/>
 			</label>
 			<label>
@@ -38,6 +40,7 @@ function HeadingForm({ formRef, onSubmit, initialData }) {
 					value={formState.phoneNumber}
 					onChange={handleChange}
 					placeholder="Enter phone number"
+					required
 				/>
 			</label>
 			<label>
@@ -48,6 +51,7 @@ function HeadingForm({ formRef, onSubmit, initialData }) {
 					value={formState.email}
 					onChange={handleChange}
 					placeholder="Enter e-mail address"
+					required
 				/>
 			</label>
 		</form>
@@ -55,19 +59,9 @@ function HeadingForm({ formRef, onSubmit, initialData }) {
 }
 
 export default function CVHeading({ headingData, onUpdateHeading }) {
+	const { isOpen, formRef, openModal, closeModal } = useModal();
 	const [isMouseInside, setIsMouseInside] = useState();
-	const [modalOpen, setModalOpen] = useState(false);
 	const { name, phoneNumber, email } = headingData;
-	const formRef = useRef(null);
-
-	const handleEdit = () => {
-		setModalOpen(true);
-	};
-
-	const handleClose = () => {
-		setModalOpen(false);
-		setIsMouseInside(false);
-	};
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
@@ -82,8 +76,7 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 	const handleSave = (formData) => {
 		onUpdateHeading(formData);
 
-		setModalOpen(false);
-		setIsMouseInside(false);
+		closeModal();
 	};
 
 	return (
@@ -99,17 +92,17 @@ export default function CVHeading({ headingData, onUpdateHeading }) {
 			</div>
 			{isMouseInside && (
 				<SquareButton
-					onClick={handleEdit}
+					onClick={() => openModal()}
 					icon={editButton}
 					typeStyling={"edit-button"}
 				/>
 			)}
-			{modalOpen &&
+			{isOpen &&
 				createPortal(
 					<Modal
 						title={"contact"}
-						onClose={handleClose}
-						onCancel={handleClose}
+						onClose={() => closeModal()}
+						onCancel={() => closeModal()}
 						formRef={formRef}
 					>
 						<HeadingForm

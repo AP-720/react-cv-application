@@ -123,12 +123,11 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	
 }
 
-.modal-date-container {
+/* .modal-date-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: var(--spacing-l);
-}
+} */

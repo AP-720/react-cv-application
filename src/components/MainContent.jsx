@@ -59,6 +59,9 @@ const initialCVData = {
 export default function CVContainer() {
 	const [cvData, setCvData] = useState(initialCVData);
 
+	// Modal functions
+
+	// Heading functions
 	const updateHeading = (newHeadingData) => {
 		setCvData((prevData) => ({
 			...prevData,
@@ -73,17 +76,17 @@ export default function CVContainer() {
 			...prevData,
 			workExperiences: [
 				...prevData.workExperiences,
-				{...newWork, id: crypto.randomUUID()}
-			]
+				{ ...newWork, id: crypto.randomUUID() },
+			],
 		}));
-	}
+	};
 
-	// Different to above as not updating the whole value, need to find the matching id and replace that one. 
+	// Different to above as not updating the whole value, need to find the matching id and replace that one.
 
 	// const updateWorkExperience = (newWorkData) => {
 	// 	setCvData((prevData) => ({
 	// 		...prevData,
-	// 		workExperiences: 
+	// 		workExperiences:
 	// 	}))
 	// }
 
@@ -93,7 +96,10 @@ export default function CVContainer() {
 				headingData={cvData.heading}
 				onUpdateHeading={() => updateHeading()}
 			/>
-			<WorkExperience workExperiences={cvData.workExperiences} onAddWorkExperience={addWorkExperience} />
+			<WorkExperience
+				workExperiences={cvData.workExperiences}
+				onAddWorkExperience={addWorkExperience}
+			/>
 			<Education education={cvData.education} />
 		</div>
 	);
