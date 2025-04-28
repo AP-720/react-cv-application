@@ -59,8 +59,6 @@ const initialCVData = {
 export default function CVContainer() {
 	const [cvData, setCvData] = useState(initialCVData);
 
-	// Modal functions
-
 	// Heading functions
 	const updateHeading = (newHeadingData) => {
 		setCvData((prevData) => ({
@@ -81,24 +79,33 @@ export default function CVContainer() {
 		}));
 	};
 
-	// Different to above as not updating the whole value, need to find the matching id and replace that one.
+	const editWorkExperience = (editWorkData) => {
+		setCvData((prevData) => ({
+			...prevData,
+			workExperiences: prevData.workExperiences.map((item) =>
+				item.id === editWorkData.id ? editWorkData : item
+			),
+		}));
+	};
 
-	// const updateWorkExperience = (newWorkData) => {
-	// 	setCvData((prevData) => ({
-	// 		...prevData,
-	// 		workExperiences:
-	// 	}))
-	// }
+	const deleteWorkExperience = (roleId) => {
+		setCvData((prevData) => ({
+			...prevData,
+			// Filters out only the item with the same id as the currentItem
+			workExperiences: prevData.workExperiences.filter(
+				(item) => item.id !== roleId
+			),
+		}));
+	};
 
 	return (
 		<div className="cv-container">
-			<CVHeading
-				headingData={cvData.heading}
-				onUpdateHeading={() => updateHeading()}
-			/>
+			<CVHeading headingData={cvData.heading} onUpdateHeading={updateHeading} />
 			<WorkExperience
 				workExperiences={cvData.workExperiences}
 				onAddWorkExperience={addWorkExperience}
+				onEditWorkExperience={editWorkExperience}
+				onDeleteWorkExperience={deleteWorkExperience}
 			/>
 			<Education education={cvData.education} />
 		</div>

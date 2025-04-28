@@ -5,7 +5,7 @@ import SquareButton from "./EditButton";
 import { plusButton, editButton } from "./icons";
 import Modal from "./Modal";
 
-function WorkExperienceForm({ formRef, onSubmit, initialData }) {
+function WorkExperienceForm({ formRef, onSubmit, initialData, onDelete }) {
 	const [formState, setFormSate] = useState({
 		position: initialData.position || "",
 		companyName: initialData.companyName || "",
@@ -81,7 +81,12 @@ function WorkExperienceForm({ formRef, onSubmit, initialData }) {
 					></textarea>
 				</label>
 			</form>
-			<button className="button">Delete Job</button>
+			{/* Conditionally renders the button only if there is a ID, and an ID is only set if editing.  */}
+			{initialData.id && (
+				<button className="button" onClick={onDelete}>
+					Delete Job
+				</button>
+			)}
 		</>
 	);
 }
@@ -119,7 +124,7 @@ function WorkExperienceItem({
 				<span className="font-weight-bold">From:</span> {fromDate}{" "}
 				<span className="font-weight-bold">To:</span> {toDate}
 			</p>
-			<p className="col-span-all">{responsibilities}</p>
+			<p className="col-span-all justify-start">{responsibilities}</p>
 			<div
 				className="button-hover-area"
 				onMouseEnter={() => {
@@ -155,19 +160,18 @@ function WorkExperienceItem({
 export default function WorkExperience({
 	workExperiences,
 	onAddWorkExperience,
+	onEditWorkExperience,
+	onDeleteWorkExperience,
 }) {
 	const { isOpen, currentItem, formRef, openModal, closeModal } = useModal();
 	const [isMouseInside, setIsMouseInside] = useState(false);
 	const [isInsideList, setIsInList] = useState(false);
 
-	// const handleModalOpen = () => {
-	// 	setModalOpen(true);
-	// };
-
-	// const handleModalClose = () => {
-	// 	setModalOpen(false);
-	// 	setIsMouseInside(false);
-	// };
+	// Find role and open modal with the data and set it to currentItem
+	const handleEditWork = (roleID) => {
+		const itemToEdit = workExperiences.find((role) => role.id === roleID);
+		openModal(itemToEdit);
+	};
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
@@ -175,14 +179,16 @@ export default function WorkExperience({
 
 		const data = Object.fromEntries(formData.entries());
 
-		onAddWorkExperience(data);
+		if (currentItem) {
+			// Edit item
+			onEditWorkExperience({ ...data, id: currentItem.id });
+		} else {
+			// Add item
+			onAddWorkExperience(data);
+		}
+
 		closeModal();
 	};
-
-	// const onEditWork = () => {
-	// 	// Needs to find the right job via its id and then copy it and replace it with the new data.
-	// 	alert("Edit");
-	// };
 
 	return (
 		<div
@@ -205,7 +211,7 @@ export default function WorkExperience({
 						fromDate={role.fromDate}
 						toDate={role.toDate}
 						responsibilities={role.responsibilities}
-						onEdit={() => openModal()}
+						onEdit={() => handleEditWork(role.id)}
 					/>
 				))}
 			</ul>
@@ -228,6 +234,10 @@ export default function WorkExperience({
 						<WorkExperienceForm
 							formRef={formRef}
 							onSubmit={handleFormSubmit}
+							onDelete={() => {
+								onDeleteWorkExperience(currentItem.id);
+								closeModal();
+							}}
 							// Use empty object for new items
 							initialData={currentItem || {}}
 						/>
