@@ -18,7 +18,7 @@ export default function Modal({ title, children, onClose, onCancel, formRef }) {
 					</button>
 				</div>
 				<div className="modal-content pb-4">
-					<h1 className="pb-4">Edit {title} details</h1>
+					<h1 className="pb-4">Edit {title} Details</h1>
 					{children}
 				</div>
 				<div className="modal-footer">

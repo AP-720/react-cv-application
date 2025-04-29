@@ -98,6 +98,34 @@ export default function CVContainer() {
 		}));
 	};
 
+	// Education functions
+
+	const onAddEducation = (newEducation) => {
+		setCvData((prevData) => ({
+			...prevData,
+			education: [
+				...prevData.education,
+				{ ...newEducation, id: crypto.randomUUID() },
+			],
+		}));
+	};
+
+	const onEditEducation = (editEducationData) => {
+		setCvData((prevData) => ({
+			...prevData,
+			education: prevData.education.map((item) =>
+				item.id === editEducationData.id ? editEducationData : item
+			),
+		}));
+	};
+
+	const onDeleteEducation = (educationId) => {
+		setCvData((prevData) => ({
+			...prevData,
+			education: prevData.education.filter((item) => item.id !== educationId),
+		}));
+	};
+
 	return (
 		<div className="cv-container">
 			<CVHeading headingData={cvData.heading} onUpdateHeading={updateHeading} />
@@ -107,7 +135,12 @@ export default function CVContainer() {
 				onEditWorkExperience={editWorkExperience}
 				onDeleteWorkExperience={deleteWorkExperience}
 			/>
-			<Education education={cvData.education} />
+			<Education
+				education={cvData.education}
+				onAddEducation={onAddEducation}
+				onEditEducation={onEditEducation}
+				onDeleteEducation={onDeleteEducation}
+			/>
 		</div>
 	);
 }

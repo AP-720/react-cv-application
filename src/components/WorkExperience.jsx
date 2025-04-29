@@ -180,7 +180,7 @@ export default function WorkExperience({
 		const data = Object.fromEntries(formData.entries());
 
 		if (currentItem) {
-			// Edit item
+			// Edit item, need to pass in the id property as the form doesn't provide it.
 			onEditWorkExperience({ ...data, id: currentItem.id });
 		} else {
 			// Add item
@@ -238,7 +238,7 @@ export default function WorkExperience({
 								onDeleteWorkExperience(currentItem.id);
 								closeModal();
 							}}
-							// Use empty object for new items
+							// Use empty object for new items, use currentITem if editing
 							initialData={currentItem || {}}
 						/>
 					</Modal>,
